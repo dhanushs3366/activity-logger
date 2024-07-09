@@ -1,0 +1,26 @@
+➜  activity-logger git:(main) ✗ python temp.py    
+Event1: Power Button
+Event2: Sleep Button
+Event3: Asus WMI hotkeys
+Event4: Razer Razer Viper 8KHz Keyboard
+Event5: Video Bus
+Event6: Asus Wireless Radio Control
+Event7: Razer Razer Viper 8KHz
+Event8: ELAN1201:00 04F3:3098 Mouse
+Event9: Razer Razer Viper 8KHz
+Event10: ELAN1201:00 04F3:3098 Touchpad
+Event11: Razer Razer Viper 8KHz
+Event12: HD-Audio Generic HDMI/DP,pcm=3
+Event13: HDA NVidia HDMI/DP,pcm=3
+Event14: Asus Keyboard
+Event15: Asus Keyboard
+Event16: HD-Audio Generic Mic
+Event17: LangTu USB Keyboard
+Event18: LangTu USB Keyboard Consumer Control
+Event19: LangTu USB Keyboard System Control
+Event20: LangTu USB Keyboard
+Event21: USB PnP Audio Device
+Event22: HDA NVidia HDMI/DP,pcm=7
+Event23: HDA NVidia HDMI/DP,pcm=8
+Event24: HDA NVidia HDMI/DP,pcm=9
+Event25: HD-Audio Generic Headphone
