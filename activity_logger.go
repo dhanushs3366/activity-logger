@@ -1,14 +1,17 @@
 package activitylogger
 
 import (
+	"bytes"
+	"encoding/binary"
 	"errors"
 	"fmt"
 	"os"
 	"regexp"
 	"strconv"
+	"unsafe"
 )
 
-type keylogger struct {
+type Keylogger struct {
 	File *os.File
 }
 
@@ -17,8 +20,8 @@ type DeviceInfo struct {
 	Name    string
 }
 
-func New(devPath string) (*keylogger, error) {
-	logger := keylogger{}
+func New(devPath string) (*Keylogger, error) {
+	logger := Keylogger{}
 	inputFile, err := os.OpenFile(devPath, os.O_RDONLY, os.ModeCharDevice)
 	if err != nil {
 		return nil, err
@@ -88,4 +91,48 @@ func getEventNumber(devPath string) (int, error) {
 		return -1, errors.New("provide a proper devPath")
 	}
 	return eventNumber, nil
+}
+
+func (k *Keylogger) Read() chan InputEvent {
+	inputChannel := make(chan InputEvent)
+
+	go func() {
+		for {
+			input, err := k.parseBinaryKeyCode()
+			if err != nil {
+				close(inputChannel)
+				break
+			}
+			if inputChannel != nil {
+				inputChannel <- *input
+			}
+
+		}
+	}()
+
+	return inputChannel
+}
+
+func (k *Keylogger) parseBinaryKeyCode() (*InputEvent, error) {
+	eventSize := int(unsafe.Sizeof(InputEvent{}))
+	buff := make([]byte, eventSize)
+	_, err := k.File.Read(buff)
+	if err != nil {
+		return nil, err
+	}
+
+	var keyInput InputEvent
+	err = binary.Read(bytes.NewBuffer(buff), binary.LittleEndian, &keyInput)
+	if err != nil {
+		return nil, err
+	}
+	return &keyInput, nil
+}
+
+func (i *InputEvent) ToString() string {
+	return KeyMap[int(i.Code)]
+}
+
+func (k *Keylogger) Close() error {
+	return k.File.Close()
 }
