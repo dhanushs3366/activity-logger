@@ -15,7 +15,7 @@ func main() {
 	var k *activitylogger.Keylogger
 	for _, device := range devices {
 		fmt.Printf("path: %s\t name:%s", device.DevPath, device.Name)
-		if device.DevPath == "/dev/input/event10" {
+		if device.DevPath == "/dev/input/event7" {
 			k, err = activitylogger.New(device.DevPath)
 			if err != nil {
 				panic(err)
